@@ -1,0 +1,7 @@
+date,day,time,file number,first name,last name,clinic,service,purpose (note),duration,status
+06/01/2023,Tuesday,14:00:00,10002,Amal,Almari,Diabetic Eye Clinic,Follow up,Glaucoma treatment,00:45:00,attended
+06/01/2023,Tuesday,14:45:00,,,,,,,,
+06/01/2023,Tuesday,15:45:00,,,,,,,,
+06/01/2023,Tuesday,16:45:00,,,,,,,,
+06/01/2023,Tuesday,17:45:00,,,,,,,,
+06/01/2023,Tuesday,18:45:00,,,,,,,,

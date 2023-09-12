@@ -1,0 +1,2 @@
+date,day,time,clinic,doctor,service,purpose_(note),duration,status,medical_report,test_result,sick_leave,companion_sick_leave
+06/01/2023,Tuesday,14:00:00,Diabetic Eye Clinic,Dr. Lee,Follow up,Glaucoma treatment,00:45:00,attended,file5.pdf,file6.pdf,file7.pdf,file8.pdf

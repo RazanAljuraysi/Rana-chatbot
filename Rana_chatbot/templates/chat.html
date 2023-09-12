@@ -1,0 +1,158 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- DIA note: a part of the code in this file was inspired from https://github.com/binary-hood/ChatBot/tree/main --->
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>RAEH</title>
+		<link rel="icon" type="image/x-icon" href="https://i.ibb.co/4jBXBZK/04facce9-03da-4346-972e-2f18f16d67a3.jpg">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}"/>
+	</head>
+	<style>
+		.msg_cotainer_send, .msg_cotainer {
+			max-width: calc(80% - 40px);
+		}
+
+		.card {
+			height: 90vh;
+		}
+	</style>
+	
+	<body>
+		<div class="container-fluid h-100">
+			<div class="row justify-content-center h-100">		
+				<div class="col-md-8 col-xl-6 chat">
+					<div class="card">
+						<div class="card-header msg_head">
+							<div class="d-flex bd-highlight">
+								<div class="img_cont">
+									<img src="https://i.ibb.co/4jBXBZK/04facce9-03da-4346-972e-2f18f16d67a3.jpg" class="rounded-circle user_img">
+									<span class="online_icon"></span>
+								</div>
+								<div class="user_info">
+									<span>Rana</span>
+									<p>Ask me anything!</p>
+								</div>
+							</div>
+						</div>
+						<div id="messageFormeight" class="card-body msg_card_body">
+							
+							
+						</div>
+						<div class="card-footer">
+							<form id="messageArea" class="input-group">
+                                <input type="text" id="text" name="msg" placeholder="Type your message..." autocomplete="off" class="form-control type_msg" id="msg_input" required/>
+								<div class="input-group-append">
+									<button type="submit" id="send" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script>
+
+			let user_id = null;
+			let date_picker_active = false;
+			let msg_input = document.getElementById("text")
+			let last_msg_time = (new Date()).getTime();
+			let timeout;
+
+			function set_date_picker(active) {
+				console.log(".type_msg: ", $(".type_msg"));
+				if(active) {
+					date_picker_active = true;
+					msg_input.type = "date"
+				} else {
+					date_picker_active = false
+					msg_input.type = "text"
+				}
+			}
+
+			function str_time() {
+				const date = new Date();
+				const hour = date.getHours();
+				const minute = date.getMinutes();
+				const str_time = hour+":"+minute;
+				return str_time;
+			}
+
+			function docElem(elem, classes=null, attrs=null, children=null) {
+				let x = document.createElement(elem);
+				if(classes) classes.split(" ").map(c => x.classList.add(c));
+				if(attrs) Object.keys(attrs).map(a => x[a] = attrs[a]);
+				if(children) children.map(b => x.appendChild(b));
+				return x;
+			}
+			function docElem_generator(elem_name) {
+				return function(classes=null, attrs=null, children=null) { return docElem(elem_name, classes, attrs, children) }
+			}
+			const [ divElem, spanElem, imgElem ] = [ "div", "span", "img" ].map(docElem_generator);
+
+
+			function handleResponse(response) {
+				let reply_type = response.reply_type;
+				let reply = response.reply;
+				user_id = response.user_id;
+				
+				let botHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/4jBXBZK/04facce9-03da-4346-972e-2f18f16d67a3.jpg" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' + reply + '<span class="msg_time">' + str_time() + '</span></div></div>';
+				$("#messageFormeight").append(botHtml);
+				$('#messageFormeight').animate({scrollTop: $('#messageFormeight').prop("scrollHeight")}, 500);
+				if(reply_type === "date") {
+					set_date_picker(true);
+				}
+				last_msg_time = (new Date()).getTime();
+				runTimeout();
+			}
+
+			function runTimeout() {
+				clearTimeout(timeout);
+				timeout = setTimeout(() => {
+					handleResponse({ reply_type: "text", reply: "I'm sorry, but I didn't receive a response. Can I assist you with something else? I can help you answring any questions you have, as well as help you view your medications and appointmnets", user_id });
+					clearTimeout(timeout);
+				}, 300000);
+			}
+
+
+			function sendMessage(message, cb) {
+				$.ajax({
+					data: {
+						msg: message,
+						user_id
+					},
+					type: "POST",
+					url: "/get_reply",
+				}).done(response => {
+					handleResponse(response)
+					if(cb) cb();
+				});
+			}
+
+
+			$(document).ready(function() {
+				$("#messageArea").on("submit", function(event) {
+					let rawText = $("#text").val();
+					if(date_picker_active) set_date_picker(false);
+
+					var userHtml = '<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">' + rawText + '<span class="msg_time_send">'+ str_time() + '</span></div><div class="img_cont_msg"><img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg"></div></div>';
+					$("#text").val("");
+					$("#messageFormeight").append(userHtml);
+
+					sendMessage(rawText)
+					event.preventDefault();
+				});
+			});
+
+			sendMessage("", () => sendMessage(""));
+
+
+		</script>
+        
+    </body>
+</html>

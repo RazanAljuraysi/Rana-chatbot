@@ -1,0 +1,7 @@
+date,day,time,clinic,doctor,service,purpose_(note),duration,status,medical_report,test_result,sick_leave,companion_sick_leave
+05/06/2021,Saturday,10:00:00,Cataract Clinic,Dr. Brown,Consultation,Regular eye checkup,01:00:00,attended,file1.pdf,file2.pdf,file3.pdf,file4.pdf
+05/06/2022,Sunday,10:00:00,Cataract Clinic,Dr. Brown,Consultation,Regular eye checkup,01:00:00,attended,file1.pdf,file2.pdf,file3.pdf,file4.pdf
+05/01/2023,Thursday ,10:00:00,Cataract Clinic,Dr. Brown,Consultation,Regular eye checkup,01:00:00,attended,file1.pdf,file2.pdf,file3.pdf,file4.pdf
+05/06/2023,Monday,10:00:00,Cataract Clinic,Dr. Brown,Consultation,Regular eye checkup,01:00:00,confirmed,file1.pdf,file2.pdf,file3.pdf,file4.pdf
+12/06/2023,Monday,10:00:00,Cataract Clinic,Dr. Brown,Consultation,Regular eye checkup,01:00:00,confirmed,file1.pdf,file2.pdf,file3.pdf,file4.pdf
+19/06/2023,Monday,10:00:00,Cataract Clinic,Dr. Brown,Consultation,Regular eye checkup,01:00:00,confirmed,file1.pdf,file2.pdf,file3.pdf,file4.pdf

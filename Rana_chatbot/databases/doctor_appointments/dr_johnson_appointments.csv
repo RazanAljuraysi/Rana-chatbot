@@ -1,0 +1,7 @@
+date,day,time,file number,first name,last name,clinic,service,purpose (note),duration,status
+07/01/2023,Wednesday,11:30:00,10003,Khalid,Alsalem,Refractive Clinic,Surgery,Cataract surgery,01:00:00,rescheduled
+07/01/2023,Wednesday,13:30:00,,,,,,,,
+07/01/2023,Wednesday,14:30:00,,,,,,,,
+07/01/2023,Wednesday,15:30:00,,,,,,,,
+07/01/2023,Wednesday,16:30:00,,,,,,,,
+07/01/2023,Wednesday,17:30:00,,,,,,,,

@@ -1,0 +1,17 @@
+flask
+transformers
+torch
+json
+string
+random 
+nltk
+csv
+time
+logging
+pandas
+numpy
+tensorflow
+flask
+spellchecker
+contractions
+textblob
